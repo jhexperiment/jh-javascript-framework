@@ -63,6 +63,11 @@ var oMain = {
                 sValue = $.fnUppercaseWord(sValue);
                 break;
               
+              case "alpha":
+                sRegExp = "[A-Za-z]";
+                sValue = $.fnCleanString(sRegExp, sValue);
+                break;
+                
               case "numeric":
                 sRegExp = "[0-9]";
                 sValue = $.fnCleanString(sRegExp, sValue);
