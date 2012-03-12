@@ -32,7 +32,7 @@ var oMain = {
               event.preventDefault(); 
             }
           }
-        })
+        });
       },
       /**
        * $("<css>").fnDataFormat()
@@ -187,6 +187,21 @@ var oMain = {
       }
     });
     
+    jQuery.fnGetAge = function(sYear, sMonth, sDay) {
+      if (sYear == "" || sMonth == "" || sDay == "") {
+        return false;
+      }
+      var iMonth = parseInt(sMonth) - 1;
+      // months in javascript Date is 0-11
+      iMonth = iMonth - 1;
+      var oBirthday = new Date(sYear, iMonth, sDay);
+      var oNow = new Date();
+      var fDiffDays = (oNow - oBirthday) / 1000 / (60 * 60 * 24);
+      var iCalcYears = Math.floor(fDiffDays / 365.25);
+      
+      return iCalcYears;
+    };
+    
     /**
      * $.fnValidateEmail()
      * 
@@ -265,7 +280,7 @@ var oMain = {
       var aList = {
         "min-alpha": null,
         "min-numeric": null,
-        "min-symbol": null,
+        "min-symbol": null
       };
       for (sType in aList) {
         var sTypeValue = $(oInput).attr(sType);
@@ -507,7 +522,7 @@ var oMain = {
         }
       }
       
-      return sCleanedString.trim();
+      return $.trim(sCleanedString);
     }
     
     /**
@@ -526,7 +541,7 @@ var oMain = {
         return sString;
       }
       
-      sString = sString.trim();
+      sString = $.trim(sString);
       var sFormattedString = "";
       var aWordSpaceList = sString.split(" ");
       $.each(aWordSpaceList, function() {
@@ -551,7 +566,7 @@ var oMain = {
           sFormattedString += " " + sWordDashString;
         }
       });
-      return sFormattedString.trim();
+      return $.trim(sFormattedString);
     }
     
     /**
@@ -570,7 +585,7 @@ var oMain = {
         return sString;
       }
       
-      sString = sString.trim();
+      sString = $.trim(sString);
       var sFormattedString;
       var sFirst = sString.substr(0,1);
       if (sFirst != "&") {
@@ -599,7 +614,7 @@ var oMain = {
         return sString;
       }
       
-      sString = sString.trim();
+      sString = $.trim(sString);
       var sFormattedString;
       var aMap = {
         'à' : 'À',
@@ -636,7 +651,7 @@ var oMain = {
           sFormattedString = sString.toUpperCase();
         }
       }
-      return sFormattedString.trim();
+      return $.trim(sFormattedString);
     };
     
     /**
@@ -655,7 +670,7 @@ var oMain = {
         return sString;
       }
       
-      sString = sString.trim();
+      sString = $.trim(sString);
       var sFormattedString;
       var aMap = {
         'À' : 'à',
@@ -692,7 +707,7 @@ var oMain = {
           sFormattedString = sString.toLowerCase();
         }
       }
-      return sFormattedString.trim();
+      return $.trim(sFormattedString);
     };
     
     /**
@@ -742,5 +757,28 @@ var oMain = {
       
       return sFormatedNumber;
     };
+    
+    jQuery.fnCenter = function(oElement) {
+      var aWindow = {
+        'height': $(window).height(),
+        'width': $(window).width()
+      };
+      var aElement = {
+        'height': oElement.height(),
+        'width': oElement.width()
+      };
+      /*
+      var aReturn = {
+        'left': (aWindow.width / 2) - (aElement.width / 2),
+        'top': (aWindow.height / 2) - (aElement.height / 2)
+      }
+      */
+      var iLeft = (aWindow.width / 2) - (aElement.width / 2);
+      var iTop = (aWindow.height / 2) - (aElement.height / 2);
+      oElement.css("left", Math.max(iLeft, 16));
+      oElement.css("top", Math.max(iTop, 16));
+    };
   }
-}
+};
+
+
